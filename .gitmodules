@@ -1,0 +1,6 @@
+[submodule "premake"]
+	path = premake
+	url = https://github.com/d-led/premake-meta-cpp.git
+[submodule "deps/crow"]
+	path = deps/crow
+	url = https://github.com/ipkn/crow.git
