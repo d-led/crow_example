@@ -19,3 +19,9 @@ includedirs {
 
 make_console_app('example_with_all', { 'src/example_with_all.cpp' })
 use_standard('c++11')
+
+-- links {
+-- 	'boost_system',
+-- 	'boost_date_time',
+-- 	'boost_regex',
+-- }
