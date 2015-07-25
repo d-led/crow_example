@@ -2,10 +2,14 @@ include 'premake'
 
 make_solution 'test'
 
-defines {
-	'NOGDI',
-	'CROW_MSVC_WORKAROUND'
-}
+-------------------------------
+configuration 'windows'
+	defines {
+		'NOGDI',
+		'CROW_MSVC_WORKAROUND'
+	}
+configuration '*'
+-------------------------------
 
 boost = assert(dofile 'premake/recipes/boost.lua')
 boost:set_defines()
@@ -20,8 +24,11 @@ includedirs {
 make_console_app('example_with_all', { 'src/example_with_all.cpp' })
 use_standard('c++11')
 
--- links {
--- 	'boost_system',
--- 	'boost_date_time',
--- 	'boost_regex',
--- }
+configuration 'not windows'
+	links {
+		'boost_system',
+		'boost_date_time',
+		'boost_regex',
+		'pthread'
+	}
+configuration '*'
