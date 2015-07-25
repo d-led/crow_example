@@ -11,29 +11,35 @@ class ExampleLogHandler : public crow::ILogHandler {
         }
 };
 
+#ifdef CROW_MSVC_WORKAROUND
+#undef CROW_ROUTE
+#define CROW_ROUTE(app, url) app.route_dynamic(url)
+#endif
+
 int main()
 {
     crow::SimpleApp app;
 
-    app.route_dynamic("/").name("hello")
+    CROW_ROUTE(app, "/")
+        .name("hello")
     ([]{
         return "Hello World!";
     });
 
-    app.route_dynamic("/about")
+    CROW_ROUTE(app, "/about")
     ([](){
         return "About Crow example.";
     });
 
     // simple json response
-    app.route_dynamic("/json")
+    CROW_ROUTE(app, "/json")
     ([]{
         crow::json::wvalue x;
         x["message"] = "Hello, World!";
         return x;
     });
 
-    app.route_dynamic("/hello/<int>")
+    CROW_ROUTE(app,"/hello/<int>")
     ([](int count){
         if (count > 100)
             return crow::response(400);
@@ -42,7 +48,7 @@ int main()
         return crow::response(os.str());
     });
 
-    app.route_dynamic("/add/<int>/<int>")
+    CROW_ROUTE(app,"/add/<int>/<int>")
     ([](const crow::request& req, crow::response& res, int a, int b){
         std::ostringstream os;
         os << a+b;
@@ -51,13 +57,13 @@ int main()
     });
 
     // Compile error with message "Handler type is mismatched with URL paramters"
-    //app.route_dynamic(/another/<int>")
+    //CROW_ROUTE(app,"/another/<int>")
     //([](int a, int b){
         //return crow::response(500);
     //});
 
     // more json example
-    app.route_dynamic("/add_json")
+    CROW_ROUTE(app, "/add_json")
     ([](const crow::request& req){
         auto x = crow::json::load(req.body);
         if (!x)
@@ -68,7 +74,7 @@ int main()
         return crow::response{os.str()};
     });
 
-    app.route_dynamic("/params")
+    CROW_ROUTE(app, "/params")
     ([](const crow::request& req){
         std::ostringstream os;
         os << "Params: " << req.url_params << "\n\n"; 
