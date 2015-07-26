@@ -3,6 +3,7 @@
 //based on original example_with_all.cpp
 
 #include <sstream>
+#include <atomic>
 
 class ExampleLogHandler : public crow::ILogHandler {
     public:
@@ -20,7 +21,7 @@ class ExampleLogHandler : public crow::ILogHandler {
 int main()
 {
     crow::SimpleApp app;
-
+    
     CROW_ROUTE(app, "/")
         .name("hello")
     ([]{
@@ -46,6 +47,15 @@ int main()
             return crow::response(400);
         std::ostringstream os;
         os << count << " bottles of beer!";
+        return crow::response(os.str());
+    });
+
+    CROW_ROUTE(app, "/count")
+        ([]() {
+            static std::atomic<int> count(0);
+            count = count + 1;
+            std::ostringstream os;
+            os << count;
         return crow::response(os.str());
     });
 

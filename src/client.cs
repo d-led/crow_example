@@ -17,8 +17,6 @@ class Client
             sw.Start();
             Parallel.For(0, 1000, (i) =>
             {
-                //using (var client = new WebClient())
-                //{
                 int a = next(), b = next();
                 var res = client.Value.DownloadString($"http://localhost:18080/add/{a}/{b}");
 
@@ -26,7 +24,6 @@ class Client
                 {
                     Console.WriteLine($"{a}+{b}={res} (tid:{System.Threading.Thread.CurrentThread.ManagedThreadId})");
                 }
-                //}
             });
         }
 
