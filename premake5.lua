@@ -21,6 +21,7 @@ includedirs {
 	'deps/crow/amalgamate',
 }
 
+--------------------------------------------------------------------
 make_console_app('example_with_all', { 'src/example_with_all.cpp' })
 use_standard('c++11')
 
@@ -32,3 +33,10 @@ configuration 'not windows'
 		'pthread'
 	}
 configuration '*'
+
+---------------------------------------------
+make_console_app('client', { 'src/client.cs' })
+language 'C#'
+links {
+	'System'
+}

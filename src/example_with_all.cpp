@@ -7,7 +7,8 @@
 class ExampleLogHandler : public crow::ILogHandler {
     public:
         void log(std::string message, crow::LogLevel level) override {
-           std::cerr << "ExampleLogHandler -> " << message;
+           //std::cerr << "ExampleLogHandler -> " << message;
+           // cerr is synchronized
         }
 };
 
