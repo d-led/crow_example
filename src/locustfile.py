@@ -1,7 +1,7 @@
 from locust import HttpLocust, TaskSet
 
 def count(l):
-    l.client.post("/count")
+    l.client.get("/count")
 
 class UserBehavior(TaskSet):
     def on_start(self):
