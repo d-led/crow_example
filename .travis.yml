@@ -1,0 +1,18 @@
+language: cpp
+
+sudo: false
+
+# addons:
+#   apt:
+#     sources:
+#       - boost-latest
+#       - ubuntu-toolchain-r-test
+#     packages:
+#       - g++-5
+#       - libboost1.55-all-dev
+
+before_script:
+  - export CXX="g++-5"
+
+script:
+  - make -C Build/linux/gmake config=release_x64
