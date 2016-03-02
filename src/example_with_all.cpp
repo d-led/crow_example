@@ -54,9 +54,7 @@ int main()
         ([]() {
             static std::atomic<int> count(0);
             count = count + 1;
-            std::ostringstream os;
-            os << count;
-        return crow::response(os.str());
+            return crow::response(std::to_string(count));
     });
 
     CROW_ROUTE(app,"/add/<int>/<int>")
