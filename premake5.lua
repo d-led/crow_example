@@ -35,8 +35,10 @@ configuration 'not windows'
 configuration '*'
 
 ---------------------------------------------
+if os.get() == 'windows' then
 make_console_app('client', { 'src/client.cs' })
 language 'C#'
 links {
 	'System'
 }
+end
